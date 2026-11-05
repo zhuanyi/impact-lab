@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "impact-lab"
+version = "0.1.0"
+description = "Metaorder impact calibration, misspecification and capacity on synthetic data with known truth"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "scipy>=1.11",
+    "statsmodels>=0.14",
+    "cvxpy>=1.5",
+    "matplotlib>=3.8",
+    "tca-groundtruth @ git+https://github.com/zhuanyi/tca-groundtruth@634450c7250353ada1c16db00462e9d4eae16a1c",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.5"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra --strict-markers"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+extend-exclude = ["reports", ".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "NPY"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/test_charts_m5.py" = ["E501", "I001"]
+"tests/test_experiments_fixes.py" = ["I001"]
